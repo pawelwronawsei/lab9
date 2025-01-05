@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using WebApp.Models.Movies;
+using WebApp.Models.VideoGames;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<MoviesDbContext>(op =>
+builder.Services.AddDbContext<VideoGamesDbContext>(op =>
 {
-    op.UseSqlite(builder.Configuration["MoviesDatabase:ConnectionString"]);
+    op.UseSqlite(builder.Configuration.GetConnectionString("VideoGamesDatabase"));
 });
 var app = builder.Build();
 

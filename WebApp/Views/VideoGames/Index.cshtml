@@ -1,0 +1,95 @@
+﻿@model WebApp.Models.VideoGames.VideoGamesViewModel
+
+@{
+    ViewBag.Title = "Games List";
+    Layout = "_Layout";
+}
+
+<style>
+    .pagination {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .pagination a {
+        margin: 0 5px;
+        padding: 5px 10px;
+        text-decoration: none;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f0f0f0;
+        color: #333;
+    }
+
+    .pagination a:hover {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .pagination span {
+        margin: 0 10px;
+    }
+</style>
+
+<h2>Games List</h2>
+
+@* <a href="@Url.Action("Create", "VideoGames")" class="btn btn-primary">Add Game</a> *@
+
+@if (Model.Games != null && Model.Games.Any())
+{
+    <ul>
+        @foreach (var game in Model.Games)
+        {
+            <li>
+                <strong>@game.GameName</strong> 
+                <br />
+                Genre: @game.Genre?.GenreName
+                <br />
+                Publishers: 
+                @if (game.GamePublishers != null && game.GamePublishers.Any())
+                {
+                    @foreach (var publisher in game.GamePublishers)
+                    {
+                        @if (publisher.Publisher != null)
+                        {
+                            <a href="@Url.Action("Details", "Publishers", new { id = publisher.Publisher.Id })">
+                                @publisher.Publisher.PublisherName
+                            </a>
+                        }
+                        else
+                        {
+                            <span>No Publisher</span> 
+                        }
+
+                        @if (game.GamePublishers.LastOrDefault() != publisher)
+                        {
+                            @: ,  
+                        }
+                    }
+
+                }
+                else
+                {
+                    <span>No publishers</span>  <!-- Message when there are no publishers -->
+                }
+            </li>
+        }
+    </ul>
+}
+
+<!-- Pagination controls -->
+<div class="pagination">
+    @if (Model.CurrentPage > 1)
+    {
+        <a href="@Url.Action("Index", new { page = 1 })">First</a>
+        <a href="@Url.Action("Index", new { page = Model.CurrentPage - 1 })">Previous</a>
+    }
+
+    <span>Page @Model.CurrentPage of @Model.TotalPages</span>
+
+    @if (Model.CurrentPage < Model.TotalPages)
+    {
+        <a href="@Url.Action("Index", new { page = Model.CurrentPage + 1 })">Next</a>
+        <a href="@Url.Action("Index", new { page = Model.TotalPages })">Last</a>
+    }
+</div>
