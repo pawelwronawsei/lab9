@@ -30,4 +30,5 @@ public partial class Movie
     public double? VoteAverage { get; set; }
 
     public int? VoteCount { get; set; }
+    public object CompanyId { get; set; }
 }

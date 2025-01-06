@@ -55,12 +55,11 @@ public class VideoGamesController : Controller
     {
         if (ModelState.IsValid)
         {
-            // Find the maximum existing `id`
             var maxId = await _context.Games.MaxAsync(g => (int?)g.Id) ?? 0;
 
             var game = new Game
             {
-                Id = maxId + 1, // Assign a new unique `id`
+                Id = maxId + 1,
                 GameName = inputModel.GameName,
                 GenreId = inputModel.GenreId
             };

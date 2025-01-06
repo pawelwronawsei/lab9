@@ -18,7 +18,6 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
-            // Authentication logic
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, model.Username)

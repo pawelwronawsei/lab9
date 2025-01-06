@@ -1,17 +1,51 @@
 ﻿@model WebApp.Models.LoginModel
 
-<h2>Login</h2>
+@{
+    ViewBag.Title = "Zaloguj się";
+    Layout = "_Layout";
+}
 
-<form asp-action="Login" method="post">
+<style>
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-control {
+        border-radius: 5px;
+    }
+    
+    .btn-lg {
+        padding: 15px 30px; 
+        font-size: 16px;
+    }
+    
+    h2 {
+        font-family: 'Arial', sans-serif;
+        font-weight: 600;
+        font-size: 28px;
+    }
+</style>
+
+<h2 class="text-center mb-4">Zaloguj się</h2>
+
+<form asp-action="Login" method="post" class="mx-auto" style="max-width: 400px;">
     <div class="form-group">
-        <label asp-for="Username"></label>
-        <input asp-for="Username" class="form-control" />
+        <label asp-for="Username">Nazwa użytkownika</label>
+        <input asp-for="Username" class="form-control" placeholder="Wpisz nazwę użytkownika" />
         <span asp-validation-for="Username" class="text-danger"></span>
     </div>
+
     <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" type="password" class="form-control" />
+        <label asp-for="Password">Hasło</label>
+        <input asp-for="Password" type="password" class="form-control" placeholder="Wpisz hasło" />
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Login</button>
+
+    <div class="form-group text-center mt-4">
+        <button type="submit" class="btn btn-primary btn-lg">Zaloguj się</button>
+    </div>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

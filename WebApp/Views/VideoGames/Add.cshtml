@@ -5,18 +5,41 @@
     Layout = "_Layout";
 }
 
-<h2>Add a New Game</h2>
+<style>
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
 
-<form asp-action="Add" method="post">
+    .form-control {
+        border-radius: 5px; 
+    }
+
+    .btn-lg {
+        padding: 15px 30px;
+        font-size: 16px;
+    }
+
+    h2 {
+        font-family: 'Arial', sans-serif;
+        font-weight: 600;
+        font-size: 28px;
+        }
+</style>        
+
+
+<h2 class="text-center mb-4">Dodaj grę</h2>
+
+<form asp-action="Add" method="post" class="mx-auto" style="max-width: 600px;">
     <div class="form-group">
-        <label for="GameName">Game Name</label>
-        <input type="text" class="form-control" id="GameName" name="GameName" value="@Model?.GameName" />
+        <label for="GameName">Nazwa gry</label>
+        <input type="text" class="form-control" id="GameName" name="GameName" value="@Model?.GameName" placeholder="Wpisz nazwę gry." />
         <span asp-validation-for="GameName" class="text-danger"></span>
     </div>
+
     <div class="form-group">
-        <label for="GenreId">Genre</label>
+        <label for="GenreId">Gatunek</label>
         <select id="GenreId" name="GenreId" class="form-control">
-            <option value="">Select a Genre</option>
+            <option value="">Wybierz gatunek</option>
             @foreach (var genre in ViewBag.Genres as SelectList)
             {
                 <option value="@genre.Value">@genre.Text</option>
@@ -24,7 +47,10 @@
         </select>
         <span asp-validation-for="GenreId" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-success">Add Game</button>
+
+    <div class="form-group text-center mt-4">
+        <button type="submit" class="btn btn-success btn-lg">Dodaj grę</button>
+    </div>
 </form>
 
 @section Scripts {
