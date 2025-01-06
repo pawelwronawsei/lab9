@@ -1,0 +1,28 @@
+﻿@model List<WebApp.Models.VideoGames.RegionSale>
+
+@{
+    ViewBag.Title = "Game Details";
+    Layout = "_Layout";
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>Platform</th>
+            <th>Region</th>
+            <th>Number of Sales</th>
+            <th>Release Year</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var regionSale in Model)
+        {
+            <tr>
+                <td>@regionSale.GamePlatform.Platform.PlatformName</td>
+                <td>@regionSale.Region.RegionName</td>
+                <td>@((int)(regionSale.NumSales * 1000000))</td>
+                <td>@regionSale.GamePlatform.ReleaseYear</td>
+            </tr>
+        }
+    </tbody>
+</table>

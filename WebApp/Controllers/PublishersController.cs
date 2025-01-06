@@ -16,14 +16,20 @@ public class PublishersController : Controller
     // GET: Publishers/Details/5
     public async Task<IActionResult> Details(int id)
     {
-        var publisher = await _context.Publishers
-            .FirstOrDefaultAsync(p => p.Id == id);
+        // Fetch RegionSales where the GamePlatform belongs to the given game ID
+        var regionSales = await _context.RegionSales
+            .Include(rs => rs.GamePlatform)
+            .ThenInclude(gp => gp.Platform) // Include Platform details
+            .Include(rs => rs.Region) // Include Region details
+            .Where(rs => rs.GamePlatform.GamePublisher.GameId == id) // Filter by Game ID
+            .ToListAsync();
 
-        if (publisher == null)
+        if (regionSales == null || !regionSales.Any())
         {
             return NotFound();
         }
 
-        return View(publisher);
+        return View(regionSales);
     }
+
 }

@@ -33,7 +33,7 @@
 
 <h2>Games List</h2>
 
-@* <a href="@Url.Action("Create", "VideoGames")" class="btn btn-primary">Add Game</a> *@
+<a asp-action="Add" class="btn btn-primary mb-3">Add Game</a>
 
 @if (Model.Games != null && Model.Games.Any())
 {
@@ -70,14 +70,13 @@
                 }
                 else
                 {
-                    <span>No publishers</span>  <!-- Message when there are no publishers -->
+                    <span>No publishers</span> 
                 }
             </li>
         }
     </ul>
 }
 
-<!-- Pagination controls -->
 <div class="pagination">
     @if (Model.CurrentPage > 1)
     {

@@ -9,7 +9,7 @@ public partial class RegionSale
 
     public int? GamePlatformId { get; set; }
 
-    public double? NumSales { get; set; }
+    public decimal? NumSales { get; set; }
 
     public virtual GamePlatform? GamePlatform { get; set; }
 

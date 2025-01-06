@@ -25,6 +25,7 @@
       <_ContentIncludedByDefault Remove="Views\VideoGames\Add.cshtml" />
       <_ContentIncludedByDefault Remove="Views\VideoGames\Details.cshtml" />
       <_ContentIncludedByDefault Remove="Views\VideoGames\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Publishers\Details.cshtml" />
     </ItemGroup>
 
 </Project>

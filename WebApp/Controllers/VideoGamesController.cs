@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models.VideoGames;
+using Microsoft.AspNetCore.Authorization;
 namespace WebApp.Controllers;
 
 public class VideoGamesController : Controller
@@ -18,12 +20,11 @@ public class VideoGamesController : Controller
     {
         var totalGamesCount = await _context.Games.CountAsync();
         var totalPages = (int)Math.Ceiling(totalGamesCount / (double)PageSize);
-
-        // Include related entities properly, ensuring publishers are loaded
+        
         var games = await _context.Games
-            .Include(g => g.Genre)  // Include Genre if needed
+            .Include(g => g.Genre)  
             .Include(g => g.GamePublishers)
-            .ThenInclude(gp => gp.Publisher)  // Include Publisher in the join table
+            .ThenInclude(gp => gp.Publisher) 
             .Skip((page - 1) * PageSize)
             .Take(PageSize)
             .ToListAsync();
@@ -37,5 +38,39 @@ public class VideoGamesController : Controller
 
         return View(model);
     }
+    
+    // GET przenosi do Add.cshtml
+    [Authorize]
+    public IActionResult Add()
+    {
+        ViewBag.Genres = new SelectList(_context.Genres, "Id", "GenreName");
+        return View(new AddGameFormModel());
+    }
 
+    // POST
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Authorize]
+    public async Task<IActionResult> Add(AddGameFormModel inputModel)
+    {
+        if (ModelState.IsValid)
+        {
+            // Find the maximum existing `id`
+            var maxId = await _context.Games.MaxAsync(g => (int?)g.Id) ?? 0;
+
+            var game = new Game
+            {
+                Id = maxId + 1, // Assign a new unique `id`
+                GameName = inputModel.GameName,
+                GenreId = inputModel.GenreId
+            };
+
+            _context.Games.Add(game);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        ViewBag.Genres = new SelectList(_context.Genres, "Id", "GenreName");
+        return View(inputModel);
+    }
 }

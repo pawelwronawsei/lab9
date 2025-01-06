@@ -28,11 +28,27 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Movie" asp-action="Index">Movies</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="VideoGames" asp-action="Index">Video Games</a>
+                    </li>
                 </ul>
+
+                <!-- This is the container that holds the Login/Logout buttons -->
+                <div class="ml-auto d-flex">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Logout" asp-controller="Account" class="btn btn-secondary">Logout</a>
+                    }
+                    else
+                    {
+                        <a asp-action="Login" asp-controller="Account" class="btn btn-secondary">Login</a>
+                    }
+                </div>
             </div>
         </div>
     </nav>
 </header>
+
 <div class="container">
     <main role="main" class="pb-3">
         @RenderBody()
